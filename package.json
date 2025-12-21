@@ -4,7 +4,7 @@
   "description": "real time chat app",
   "license": "ISC",
   "author": "",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "postinstall": "npm install --prefix BACKEND && npm install --prefix FRONTEND",
