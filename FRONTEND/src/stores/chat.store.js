@@ -192,7 +192,8 @@ export const useChatStore = create((set, get) => ({
 
         if (!authUser) return;
 
-        const socket = io("ws://localhost:3000", {
+        let url = import.meta.env.MODE == 'production' ? "/" : "http://localhost:3000"
+        const socket = io(url, {
             reconnectionDelayMax: 10000,
             withCredentials: true,
         });
