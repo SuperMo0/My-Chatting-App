@@ -68,7 +68,7 @@ export default function Profile({ toggleDark, dark }) {
             form.append('name', name);
             form.append('avatar', imageBlob, 'userImage.png');
 
-            const result = await api.putForm('/user', form);
+            const result = await api.putForm('/user', form, { timeout: 0 });
 
             check();
 
