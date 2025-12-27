@@ -80,6 +80,7 @@ export default function Profile({ toggleDark, dark }) {
         finally {
             setIsSaving(false);
             toast.dismiss();
+            toast.success("profile updated successfuly");
         }
 
     }
