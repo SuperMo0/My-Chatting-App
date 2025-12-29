@@ -21,7 +21,7 @@ export default function Cropper({ closeModal, image }) {
 
     function handleCropButton() {
         imagePreview(imageRef.current, canvasRef.current, convertToPixelCrop(crop, imageRef.current.width, imageRef.current.height));
-        closeModal(canvasRef.current.toDataURL());
+        closeModal(canvasRef.current.toDataURL('image/jpeg', 0.7));
     }
 
     const onImageLoad = (e) => {
