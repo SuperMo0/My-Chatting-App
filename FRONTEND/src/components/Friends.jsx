@@ -18,7 +18,7 @@ export default function Friends() {
 
     function handleChat(friend) {
         let targetChat = chats.find((c) => {
-            return (c.name != 'global' && c.users[0].id == friend.id || c.users[1].id == friend.id);
+            return (c.name != 'global' && (c.users[0].id == friend.id || c.users[1].id == friend.id));
         })
         setSelectedChat(targetChat);
         navigate('/');
