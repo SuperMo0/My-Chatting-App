@@ -56,7 +56,6 @@ export async function getChatMessages(chatId) {
             include: { sender: { select: userProfileSelect } }
 
         })
-        // console.log(result);
         return result;
 
     } catch (error) {
@@ -97,7 +96,7 @@ export async function markMessageAsRead(messageId) {
                 readAt: new Date()
             },
             where: { id: messageId },
-            include: { chat: true }
+            include: { chat: true, sender: { select: userProfileSelect } }
         })
         return result;
     } catch (error) {
@@ -261,7 +260,7 @@ export async function updateChatLastMessage(chatId, lastMessage) {
                 users: {
                     select: userProfileSelect
                 },
-                lastMessage: { select: { sender: { select: userProfileSelect } } },
+                lastMessage: { include: { sender: { select: userProfileSelect } } },
                 name: true,
                 id: true,
             }
@@ -269,6 +268,8 @@ export async function updateChatLastMessage(chatId, lastMessage) {
         return result
 
     } catch (error) {
+        console.log(error);
+
         throw 'error updating chat lastMessage'
     }
 
