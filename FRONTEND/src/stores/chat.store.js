@@ -230,13 +230,14 @@ export const useChatStore = create((set, get) => ({
         })
 
         socket.on("chatIsRead", (chat) => {
-            if (chat.id != get().selectedChat.id) return;
+            const selectedChat = get().selectedChat;
+            if (!selectedChat || chat.id != get().selectedChat.id) return;
 
             const { messages } = get();
             const { authUser } = useAuthStore.getState();
-            const lastMessage = chat;
+            const { lastMessage } = chat;
             let newMessages = messages.map((m) => {
-                return (m.senderId == authUser.id) ? { ...m, isRead: true, readAt: fixDate(lastMessage.readAt) } : m;
+                return (m.senderId == authUser.id) ? { ...m, isRead: true, readAt: lastMessage.readAt } : m;
             })
             set({ messages: newMessages });
         })
@@ -249,7 +250,9 @@ export const useChatStore = create((set, get) => ({
         socket.on("messageReadUpdate", (message) => {
             const { authUser } = useAuthStore.getState();
 
-            if (message.chatId != get().selectedChat.id) return;
+            const selectedChat = get().selectedChat;
+
+            if (!selectedChat || message.chatId != selectedChat.id) return;
 
             const { messages } = get()
 

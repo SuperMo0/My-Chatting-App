@@ -108,7 +108,7 @@ export async function acceptFriendRequest(req, res) {
 
         io.to(sender.id).emit("chatsUpdate", chat);
 
-        io.to(receiver).emit("friendsUpdate", chat);
+        io.to(receiver).emit("chatsUpdate", chat);
 
     } catch (error) {
         console.log(error);
