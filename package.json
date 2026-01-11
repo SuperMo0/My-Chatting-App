@@ -1,0 +1,14 @@
+{
+  "name": "chat2",
+  "version": "1.0.0",
+  "description": "real time chat app",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm install --prefix BACKEND && npm install --prefix FRONTEND",
+    "build": "npm run build --prefix FRONTEND && npm run gen --prefix BACKEND",
+    "start": "npm run migrate --prefix BACKEND && npm run start --prefix BACKEND"
+  }
+}
