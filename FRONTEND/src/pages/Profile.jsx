@@ -70,17 +70,16 @@ export default function Profile({ toggleDark, dark }) {
 
             const result = await api.putForm('/user', form, { timeout: 0 });
 
+            toast.success(result.data?.message)
             check();
 
         } catch (error) {
             console.log(error);
-
             toast.error('there was a problem try again later');
         }
         finally {
             setIsSaving(false);
             toast.dismiss();
-            toast.success("profile updated successfuly");
         }
 
     }
