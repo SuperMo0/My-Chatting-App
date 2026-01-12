@@ -23,7 +23,7 @@ export default function MeBubble({ message }) {
             </div>
             <div className="chat-bubble bg-blue text-white max-w-1/2">{message.content}</div>
             {message.chatId != "1" &&
-                <div className="chat-footer opacity-50">{message.isRead ? `Seen at ${message.readAt}` : 'delivered'}</div>
+                <div className="chat-footer opacity-50">{message.isRead ? `Seen at ${fixDate(message.readAt)}` : 'delivered'}</div>
             }
         </div>
     )

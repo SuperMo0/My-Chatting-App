@@ -10,7 +10,7 @@ import { cn } from '../utils/utils';
 
 export default function ChatInput() {
 
-    const [text, setText] = useState();
+    const [text, setText] = useState("");
     const [image, setImage] = useState();
     const { sendMessage } = useChatStore();
     const [showEmoji, setShowEmoji] = useState(false);
