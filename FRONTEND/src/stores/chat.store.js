@@ -210,7 +210,8 @@ export const useChatStore = create((set, get) => ({
 
             const newChats = chats.filter((c) => c.id != chat.id);
 
-            if (get().selectedChat?.id == chat.id) {
+            const { selectedChat } = get();
+            if (selectedChat && selectedChat.id == chat.id) {
                 const messages = get().messages || [];          // we should have a state isGettingMessages to avoid race conditions
                 set({ messages: [...messages, chat.lastMessage] });
 
