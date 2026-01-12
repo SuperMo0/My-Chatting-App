@@ -3,8 +3,8 @@ import { useChatStore } from './../stores/chat.store'
 import { fixDate } from '../utils/utils.js';
 
 export default function FriendBubble({ message }) {
-    const { selectedFriend } = useChatStore();
 
+    const selectedFriend = message.sender;
     return (
         <div className="chat chat-start">
             <div className="chat-image avatar">

@@ -52,13 +52,16 @@ export async function getChatMessages(chatId) {
     try {
         let result = await prisma.message.findMany({
             where: { chatId: chatId },
-            orderBy: { timestamp: 'asc' }
+            orderBy: { timestamp: 'asc' },
+            include: { sender: { select: userProfileSelect } }
 
         })
         // console.log(result);
         return result;
 
     } catch (error) {
+        console.log(error);
+
         throw "error while getting chat messages"
     }
 
@@ -258,7 +261,7 @@ export async function updateChatLastMessage(chatId, lastMessage) {
                 users: {
                     select: userProfileSelect
                 },
-                lastMessage: true,
+                lastMessage: { select: { sender: { select: userProfileSelect } } },
                 name: true,
                 id: true,
             }
