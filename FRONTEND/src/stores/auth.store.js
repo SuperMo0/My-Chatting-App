@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import api from '../lib/axios.js'
 import { toast } from 'react-toastify';
+import { useChatStore } from "./chat.store.js";
 
 
 export const useAuthStore = create((set, get) => ({
@@ -67,6 +68,7 @@ export const useAuthStore = create((set, get) => ({
 
     logout: async () => {
         await api.post('/auth/logout');
+        useChatStore.setState(useChatStore.getInitialState());
         set({ authUser: null });
     }
 }))

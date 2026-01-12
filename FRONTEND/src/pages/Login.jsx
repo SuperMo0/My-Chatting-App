@@ -16,7 +16,7 @@ export default function Login() {
 
     return (
         <>
-            <div className='text-center mt-5' >
+            <div className='text-center pt-8' >
                 <h1 className='text-8xl text-blue font-extrabold'>Chat</h1>
                 <p className='text-3xl text-base-content/70'>Connect freely</p>
             </div>

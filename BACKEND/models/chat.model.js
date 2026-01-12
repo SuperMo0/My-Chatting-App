@@ -174,7 +174,7 @@ export async function acceptFriendRequest(requestId) {
 
         const { senderId, receiverId } = request;
 
-        const [_, sender, receiver, chat] = await prisma.$transaction([
+        let [_, sender, receiver, chat] = await prisma.$transaction([
             prisma.request.delete({
                 where: { id: requestId }
             }),
@@ -193,7 +193,7 @@ export async function acceptFriendRequest(requestId) {
             })
         ])
 
-        await prisma.chat.update({
+        chat = await prisma.chat.update({
             data: {
                 users: {
                     connect: [{ id: senderId }, { id: receiverId }]
@@ -202,6 +202,7 @@ export async function acceptFriendRequest(requestId) {
             where: {
                 id: chat.id,
             }
+            , include: { users: { select: userProfileSelect } }
         })
 
         return [sender, receiver, chat]

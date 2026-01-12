@@ -8,11 +8,11 @@ export default function UsersList({ users, onAction }) {
 
     return (
         <div className='grid gap-x-4 grid-cols-[repeat(auto-fit,140px)]
-        overflow-y-auto gap-y-2 px-3 h-full items-start'>
+        overflow-y-scroll gap-y-2.5 px-3 items-start max-h-full no-scrollbar '>
             {
                 users.map((user) => (
                     <div key={user.id} className="card bg-slate-300 dark:bg-black glass w-35 shadow-sm rounded-2xl
-                     cursor-pointer hover:scale-105">
+                     cursor-pointer">
                         <figure className="px-5 pt-5">
                             <img
                                 draggable={false}
