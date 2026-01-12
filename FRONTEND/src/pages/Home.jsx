@@ -31,13 +31,13 @@ export default function Home() {
 
 
     return (
-        <div className="flex items-center justify-center h-screen bg-base-100 ">
+        <div className="flex items-center justify-center h-lvh bg-base-100 ">
             <div className='max-w-full w-full bg-slate-300 glass dark:bg-base-300 h-full rounded-2xl px-2 py-3'>
-                <div className='flex flex-col h-full md:flex-row md:gap-3'>
-                    <div className='mt-auto md:mt-0 order-2 md:order-1'>
+                <div className='flex flex-col md:flex h-full md:flex-row md:gap-3'>
+                    <div className='md:mt-0 order-2 md:order-1 bg-base-300 rounded-2xl mt-1 glass'>
                         <Panel></Panel>
                     </div>
-                    <div className='order-1 md:order2 flex-1 h-full'>
+                    <div className='order-1 md:order2 flex-1 overflow-hidden'>
                         <Outlet></Outlet>
                     </div>
                 </div>

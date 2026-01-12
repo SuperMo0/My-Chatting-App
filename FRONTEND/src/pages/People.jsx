@@ -29,8 +29,9 @@ export default function People() {
 
     let className = (name) => cn("px-1", "md:px-2", "tab", "md:text-lg", "text-xs", "font-bold", "hover:text-blue", tab == name && "tab-active");
 
+    // return <h1>hello</h1>
     return (
-        <div className='bg-slate-400/60 glass dark:bg-base-300 flex flex-col gap-0.5 h-full px-2.5 pt-2.5 '>
+        <div className='bg-slate-400/60 glass dark:bg-base-300 flex flex-col gap-0.5 px-2.5 pt-2.5 h-full '>
             <div className='flex flex-col border-b/20 border-b border-b-black/20'>
                 <SearchInput />
                 <div role="tablist" className="tabs tabs-border text-blue">
@@ -55,7 +56,7 @@ export default function People() {
             {tab == "friends" && <Friends />}
             {tab == "all people" && <AllPeople />}
             {tab == "requests" && <Requests />}
-        </div>
+        </div >
 
     )
 }
