@@ -1,13 +1,6 @@
 # 💬 Real-Time Chat Application
 
 full-stack chat application built for real-time communication. This project is part of my full stack learning journey 
-
-![ALT TEXT](./project-images/image1.png)
-![ALT TEXT](./project-images/image2.png)
-![ALT TEXT](./project-images/image3.png)
-![ALT TEXT](./project-images/image4.png)
-![ALT TEXT](./project-images/image5.png)
-
 ## 🛠 Tech Stack
 
 **Frontend:**
@@ -27,6 +20,12 @@ full-stack chat application built for real-time communication. This project is p
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
 ---
+
+![ALT TEXT](./project-images/image1.png)
+![ALT TEXT](./project-images/image2.png)
+![ALT TEXT](./project-images/image3.png)
+![ALT TEXT](./project-images/image4.png)
+![ALT TEXT](./project-images/image5.png)
 
 ## ✨ Key Features
 
