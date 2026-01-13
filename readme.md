@@ -1,13 +1,6 @@
 # 💬 Real-Time Chat Application
 
 full-stack chat application built for real-time communication. This project is part of my full stack learning journey 
-
-![ALT TEXT](./project-images/image1.png)
-![ALT TEXT](./project-images/image2.png)
-![ALT TEXT](./project-images/image3.png)
-![ALT TEXT](./project-images/image4.png)
-![ALT TEXT](./project-images/image5.png)
-
 ## 🛠 Tech Stack
 
 **Frontend:**
@@ -28,14 +21,16 @@ full-stack chat application built for real-time communication. This project is p
 
 ---
 
-## ✨ Key Features
+![ALT TEXT](./project-images/image1.png)
+![ALT TEXT](./project-images/image2.png)
+![ALT TEXT](./project-images/image3.png)
+![ALT TEXT](./project-images/image4.png)
+![ALT TEXT](./project-images/image5.png)
 
-### 🟢 Real-Time Online Status and Seen messages
-global chat and a private chat 
-### 👥 Friend System
-Connect and manage your network.
-Search for users and send friend requests.
-### customize profile 
-upload and crop profile image
-dark and light theme mode 
+## ✨ Key Features
+    Real-Time Online Status and Seen messages
+    Global chat and a private chat 
+    Friend System
+    customize profile upload and crop profile images
+    dark and light theme mode 
 ---
