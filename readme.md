@@ -31,10 +31,11 @@ full-stack chat application built for real-time communication. This project is p
 ## ✨ Key Features
 
 ### 🟢 Real-Time Online Status and Seen messages
-
+global chat and a private chat 
 ### 👥 Friend System
 Connect and manage your network.
-* **Add Friends:** Search for users and send friend requests.
-### customize profile and upload and crop profile image 
-
+Search for users and send friend requests.
+### customize profile 
+upload and crop profile image
+dark and light theme mode 
 ---
