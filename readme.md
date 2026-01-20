@@ -19,13 +19,17 @@ full-stack chat application built for real-time communication. This project is p
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
----
 
-![ALT TEXT](./project-images/image1.png)
-![ALT TEXT](./project-images/image2.png)
-![ALT TEXT](./project-images/image3.png)
-![ALT TEXT](./project-images/image4.png)
-![ALT TEXT](./project-images/image5.png)
+<video src="./project-images/video.webm" width="100%" controls autoplay loop muted></video>
+
+
+
+---
+![ALT TEXT](./project-images/Image1.png)
+![ALT TEXT](./project-images/Image2.png)
+![ALT TEXT](./project-images/Image3.png)
+![ALT TEXT](./project-images/Image4.png)
+![ALT TEXT](./project-images/Image5.png)
 
 ## ✨ Key Features
     Real-Time Online Status and Seen messages
