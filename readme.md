@@ -19,8 +19,12 @@ full-stack chat application built for real-time communication. This project is p
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=Cloudinary&logoColor=white)
 
+
+<video src="./project-images/video.webm" width="100%" controls autoplay loop muted></video>
+
+
+
 ---
-![ALT TEXT](./project-images/video.webm)
 ![ALT TEXT](./project-images/Image1.png)
 ![ALT TEXT](./project-images/Image2.png)
 ![ALT TEXT](./project-images/Image3.png)
