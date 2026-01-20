@@ -1,86 +1,74 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import UsersList from './UsersList'
 import { useChatStore } from '../stores/chat.store';
 import { ClipLoader } from "react-spinners";
 import { useAuthStore } from '../stores/auth.store';
+import { toast } from 'react-toastify';
 
 export default function AllPeople() {
-
     const { users, getUsers, friends, requestsToUser, requestsByUser, sendNewRequest, acceptRequest } = useChatStore();
     const { authUser } = useAuthStore();
 
     useEffect(() => {
-        if (users) return;
-        getUsers();
-    }, [])
+        if (!users) {
+            getUsers().catch(() => toast.error("Failed to discover new people"));
+        }
+    }, [users, getUsers]);
 
-    const usersDataCards = useMemo(() => {  // in order not to write the UsersList component twice I ended up with more lines 
+    const usersDataCards = useMemo(() => {
+        if (!users || !friends) return [];
 
-        if (!users) return
+        const friendIds = new Set(friends.map(f => f.id));
+        const pendingAcceptMap = new Map(requestsToUser.map(r => [r.senderId, r]));
+        const pendingSentIds = new Set(requestsByUser.map(r => r.receiverId));
 
-        const pendingAccept = {};
-        const pendingSent = {};
-        const isFriend = {};
-
-        friends.forEach((f) => isFriend[f.id] = true);
-
-        let filteredUsers = users.filter((u) => !isFriend[u.id] && authUser.id != u.id)
-
-        requestsToUser.forEach((r) => {
-            pendingAccept[r.senderId] = r;
-        })
-
-        requestsByUser.forEach((r) => {
-            pendingSent[r.receiverId] = r;
-        })
-
-        let usersDataCards = filteredUsers.map((u) => {
-            if (pendingAccept[u.id]) {
-                return {
-                    ...u,
-                    onAction: () => handleAccept(pendingAccept[u.id]),
-                    actionTitle: "Accept",
-                    variant: 'blue'
+        return users
+            .filter((u) => !friendIds.has(u.id) && authUser.id !== u.id)
+            .map((u) => {
+                if (pendingAcceptMap.has(u.id)) {
+                    return {
+                        ...u,
+                        onAction: () => acceptRequest(pendingAcceptMap.get(u.id)),
+                        actionTitle: "Accept",
+                        variant: 'success'
+                    };
                 }
-            }
-            else if (pendingSent[u.id]) {
-                return {
-                    ...u,
-                    onAction: () => { },
-                    actionTitle: "sent",
-                    variant: 'success'
+                if (pendingSentIds.has(u.id)) {
+                    return {
+                        ...u,
+                        onAction: () => { },
+                        actionTitle: "Sent",
+                        variant: 'ghost',
+                        isActionDisabled: true
+                    };
                 }
-            }
-            else {
                 return {
                     ...u,
-                    onAction: () => handleAdd(u),
+                    onAction: () => sendNewRequest(u),
                     actionTitle: "Add",
-                }
-            }
-        })
+                    variant: 'blue'
+                };
+            });
+    }, [users, requestsByUser, requestsToUser, friends, authUser.id, acceptRequest, sendNewRequest]);
 
-        return usersDataCards;
+    if (!users) return (
+        <div className='flex flex-col items-center justify-center h-full gap-4 opacity-60'>
+            <ClipLoader color='#3b82f6' size={40} />
+            <p className="text-sm font-bold uppercase tracking-widest text-slate-500">Finding people...</p>
+        </div>
+    );
 
-
-    }, [users, requestsByUser, requestsToUser, friends])
-
-
-    function handleAdd(user) {
-        sendNewRequest(user);
+    if (usersDataCards.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center h-64 text-center p-8">
+                <p className="text-slate-500 font-medium">You've seen everyone! Check back later for new people.</p>
+            </div>
+        );
     }
-
-    function handleAccept(request) {
-        console.log('here');
-
-        acceptRequest(request)
-    }
-
-    if (!users) return <div className='grid place-content-center h-full'>
-        <ClipLoader color='blue' loading={true} />
-    </div>
 
     return (
-        <UsersList users={usersDataCards}></UsersList>
-    )
+        <div className="h-full overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <UsersList users={usersDataCards} />
+        </div>
+    );
 }

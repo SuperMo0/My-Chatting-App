@@ -2,33 +2,39 @@
 @plugin "daisyui";
 
 @theme {
-  --background-image-blue: linear-gradient(135deg, #0061ff 0%, #60efff 100%);
-  --background-image-gray: #99a1af;
-  --color-gray: #99a1af;
-  --color-blue: oklch(62.3% 0.214 259.815);
+  --background-image-blue: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+  --color-blue: #3b82f6;
+  --color-gray: #64748b;
+  --radius-box: 1.5rem;
 }
 
-;
+@layer utilities {
+  .glass-card {
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+  }
+  
+  .no-scrollbar {
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
 
-@utility btn {
-  box-shadow: 0 10px 20px rgba(0, 97, 255, 0.05);
+  .btn-glow {
+    @apply shadow-lg shadow-blue/20 hover:shadow-blue/40 transition-all duration-300 active:scale-95;
+  }
+}
+
+@utility avatar-online {
+  &::before {
+    @apply ring-2 ring-base-100;
+    background-color: #22c55e;
+  }
 }
 
 @utility avatar-offline {
   &::before {
-    background-color: silver;
+    @apply ring-2 ring-base-100;
+    background-color: #94a3b8;
   }
 }
-
-
-@utility no-scrollbar {
-  @apply [scrollbar-width:none]
-}
-
-@utility glow {
-  box-shadow: 0 10px 20px rgba(0, 97, 255, 0.07);
-}
-
-;
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

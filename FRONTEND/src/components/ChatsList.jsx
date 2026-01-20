@@ -1,74 +1,72 @@
-import { React, useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useChatStore } from './../stores/chat.store'
-import { getFriend } from '../utils/utils';
+import { getFriend, cn } from '../utils/utils';
 import { useAuthStore } from '../stores/auth.store.js';
-import { cn } from '../utils/utils';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 
+const ChatSkeleton = () => (
+    <div className="flex gap-3 p-3 animate-pulse">
+        <div className="w-14 h-14 bg-slate-200 dark:bg-slate-800 rounded-full" />
+        <div className="flex-1 space-y-2 py-2">
+            <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-1/3" />
+            <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-full" />
+        </div>
+    </div>
+);
 
 export default function ChatsList() {
-
-    const { chats, setSelectedChat, onlineUsers } = useChatStore();
+    const { chats, setSelectedChat, onlineUsers, isGettingChats } = useChatStore();
     const { authUser } = useAuthStore();
 
+    const sortedChats = useMemo(() => {
+        if (!chats) return [];
+        return [...chats].sort((a, b) => {
+            const dateA = new Date(a?.lastMessage?.timestamp || 0);
+            const dateB = new Date(b?.lastMessage?.timestamp || 0);
+            return dateB - dateA;
+        });
+    }, [chats]);
 
-    let shouldShowChats = useMemo(() => {
-
-        let result = chats.filter((c) => (c.lastMessage || c.id == "1"))
-
-        result.sort((a, b) => {
-            let lastMessageA = new Date(a?.lastMessage?.timestamp);
-            let lastMessageB = new Date(b?.lastMessage?.timestamp);
-            return lastMessageB - lastMessageA;
-        })
-
-        return result;
-    }, [chats])
+    if (isGettingChats) {
+        return <div className="p-2 space-y-2">{[1, 2, 3, 4, 5].map(i => <ChatSkeleton key={i} />)}</div>;
+    }
 
     return (
-        <div className='bg-slate-400/60 glass dark:bg-base-300 rounded-2xl px-2 py-1.5 
-        flex flex-col gap-2 overflow-x-hidden overflow-y-auto
-         no-scrollbar max-h-full h-full'>
-            {shouldShowChats.map((chat) => {
-                if (chat.id == "1") {
-                    return (<div key={chat.id} onClick={() => { setSelectedChat(chat) }}
-                        className='flex gap-2 items-center overflow-hidden cursor-pointer hover:bg-base-100/20 rounded-2xl'>
-                        <div className={cn('avatar', 'avatar-online')}>
-                            <div className="w-15 rounded-full">
-                                <img draggable={false} src={"https://thumbs.dreamstime.com/b/global-people-network-connection-blue-earth-ai-generated-user-icons-connected-around-glowing-globe-represents-419468051.jpg"} />
+        <div className='h-full flex flex-col gap-1 p-2 overflow-y-auto no-scrollbar'>
+            <h2 className="px-3 py-2 text-xl font-black tracking-tight text-slate-800 dark:text-white">Messages</h2>
+            {sortedChats.map((chat) => {
+                const isGlobal = chat.id === "1";
+                const friend = isGlobal ? null : getFriend(authUser.id, chat);
+                const lastMsg = chat.lastMessage;
+                const isUnread = lastMsg && lastMsg.senderId !== authUser.id && !lastMsg.isRead;
+
+                return (
+                    <div
+                        key={chat.id}
+                        onClick={() => setSelectedChat(chat)}
+                        className={cn(
+                            'flex gap-3 items-center p-3 cursor-pointer rounded-2xl transition-all duration-200 group hover:bg-white dark:hover:bg-slate-800 shadow-hover',
+                            isUnread ? "bg-blue/5 dark:bg-blue/10" : "hover:shadow-md"
+                        )}
+                    >
+                        <div className={cn('avatar', isGlobal || onlineUsers.includes(friend?.id) ? 'avatar-online' : 'avatar-offline')}>
+                            <div className="w-14 rounded-full ring-2 ring-transparent group-hover:ring-blue/30 transition-all">
+                                <img draggable={false} src={isGlobal ? "https://thumbs.dreamstime.com/b/global-people-network-connection-blue-earth-ai-generated-user-icons-connected-around-glowing-globe-represents-419468051.jpg" : friend?.avatar} alt="avatar" />
                             </div>
                         </div>
-                        <div>
-                            <p>global Chat</p>
-                            <p className='text-base-content/50 whitespace-nowrap'>{chat.lastMessage?.content}</p>
+                        <div className="flex-1 min-w-0">
+                            <div className="flex justify-between items-baseline">
+                                <p className="font-bold text-slate-800 dark:text-slate-100 truncate">{isGlobal ? "Global Community" : friend?.name}</p>
+                                {lastMsg && <span className="text-[10px] text-slate-400">{new Date(lastMsg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>}
+                            </div>
+                            <p className={cn("text-xs truncate", isUnread ? "text-blue font-bold" : "text-slate-500")}>
+                                {lastMsg ? lastMsg.content : "Start a conversation..."}
+                            </p>
                         </div>
-                    </div>)
-                }
-                let friend = getFriend(authUser.id, chat);
-                const lastMessage = chat.lastMessage;
-                let shouldShowBlueDot = lastMessage.senderId != authUser.id && !lastMessage.isRead
-                if (!chat.lastMessage) return;
-                return (<div key={chat.id} onClick={() => { setSelectedChat(chat) }}
-                    className='flex gap-2 items-center overflow-hidden cursor-pointer hover:bg-base-100/20 rounded-2xl'>
-                    <div className={cn('avatar', onlineUsers.includes(friend.id) ? 'avatar-online' : 'avatar-offline')}>
-                        <div className="w-15 rounded-full">
-                            <img draggable={false} src={friend.avatar} />
-                        </div>
+                        {isUnread && <div className="w-2.5 h-2.5 bg-blue rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" />}
                     </div>
-                    <div>
-                        <p>{friend.name}</p>
-                        <p className='text-base-content/50 whitespace-nowrap'>{chat.lastMessage.content}</p>
-                    </div>
-                    {shouldShowBlueDot && <Badge className='ml-auto mr-2.5' color="primary" variant="dot">
-                        <MailIcon className='text-slate-500' />
-                    </Badge>}
-                </div>)
-
+                );
             })}
         </div>
-
-
-
-    )
+    );
 }

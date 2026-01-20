@@ -1,23 +1,17 @@
 import React from 'react'
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchInput() {
     return (
-        <div className='w-full rounded-4xl h-18 overflow-hidden '>
-            <label className="input border-0 outline-0 w-full h-full ml-1 rounded-4xl  bg-slate-300 glass dark:bg-base-300">
-                <svg className="h-[2em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        strokeWidth="2.5"
-                        fill="none"
-                        stroke="currentColor"
-                    >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                    </g>
-                </svg>
-                <input id='search' className='focus:outline-0 focus:border-0 text-[1.6em] bg-slate-300 glass dark:bg-base-300' type="search" required placeholder="Search" />
-            </label>
+        <div className="relative group w-full">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <SearchIcon className="text-slate-400 group-focus-within:text-blue transition-colors" />
+            </div>
+            <input
+                type="text"
+                placeholder="Search for friends or movies..."
+                className="w-full pl-12 pr-4 py-3 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue/50 focus:border-blue transition-all"
+            />
         </div>
     )
 }

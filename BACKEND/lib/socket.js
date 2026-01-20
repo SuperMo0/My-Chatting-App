@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import express from 'express'
 import http from 'http'
-import { log } from "console";
 import cookieParser from "cookie-parser";
 import { verify } from './../utils/jwt.js'
 import { markMessageAsRead } from "../models/chat.model.js";
@@ -19,7 +18,6 @@ const io = new Server(server, {
 const onlineUsers = { "1": true };  // global chat id is always online
 
 io.use(async (socket, next) => {
-
     const req = socket.request;
     try {
         let fn = cookieParser()
@@ -40,6 +38,8 @@ io.use(async (socket, next) => {
 
 
 io.on('connection', async (socket) => {
+    console.log('here');
+
     try {
 
         const userId = socket.request.userId;
