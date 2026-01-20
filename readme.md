@@ -21,11 +21,11 @@ full-stack chat application built for real-time communication. This project is p
 
 ---
 
-![ALT TEXT](./project-images/image1.png)
-![ALT TEXT](./project-images/image2.png)
-![ALT TEXT](./project-images/image3.png)
-![ALT TEXT](./project-images/image4.png)
-![ALT TEXT](./project-images/image5.png)
+![ALT TEXT](./project-images/Image1.png)
+![ALT TEXT](./project-images/Image2.png)
+![ALT TEXT](./project-images/Image3.png)
+![ALT TEXT](./project-images/Image4.png)
+![ALT TEXT](./project-images/Image5.png)
 
 ## ✨ Key Features
     Real-Time Online Status and Seen messages
