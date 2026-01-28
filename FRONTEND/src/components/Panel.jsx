@@ -7,58 +7,35 @@ import { useChatStore } from '../stores/chat.store';
 import { useAuthStore } from '../stores/auth.store';
 import Badge from '@mui/material/Badge';
 
-
-
-
-
 export default function Panel() {
-
     const { chats, requestsToUser } = useChatStore();
     const { authUser } = useAuthStore();
 
-    let unreadChats = 0;
+    const unreadChats = chats?.filter(c =>
+        c.lastMessage && c.lastMessage.senderId !== authUser?.id && !c.lastMessage.isRead
+    ).length || 0;
 
-    chats.forEach(chat => {
-        const lastMessage = chat.lastMessage;
-        if (!lastMessage) return;
+    const unreadRequests = requestsToUser?.filter(r => !r.isSeen).length || 0;
 
-        if (lastMessage.senderId != authUser.id && !lastMessage.isRead) unreadChats++;
-    })
-
-    let unreadRequestsToUserCount = 0;
-    requestsToUser.forEach(r => {
-        if (!r.isSeen) unreadRequestsToUserCount++;
-    })
-
+    const NavItem = ({ to, icon: Icon, label, badge }) => (
+        <NavLink to={to} className={({ isActive }) => cn(
+            "flex flex-col items-center gap-1 p-3 rounded-2xl transition-all duration-300 group",
+            isActive ? "bg-blue/10 text-blue" : "text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+        )}>
+            <Badge badgeContent={badge} color="primary" overlap="circular">
+                <Icon className="text-3xl transition-transform group-hover:scale-110" />
+            </Badge>
+            <span className="text-[10px] uppercase tracking-wider font-bold md:hidden lg:block">{label}</span>
+        </NavLink>
+    );
 
     return (
-        <div className='px-1 py-1 flex gap-2 justify-around md:flex-col md:gap-4 pt-2 md:pt-0'>
-
-            <NavLink key={"Chats"} className="group aria-[current=page]:*:bg-base-200" to={'/'}>
-                <div className='flex flex-col items-center gap-1 px-4 rounded-2xl bg-base-100/10'>
-                    <Badge className='ml-auto mr-2.5' color="primary" badgeContent={unreadChats}>
-                        <RiChatSmile3Fill className='text-5xl text-gray group-aria-[current=page]:text-blue' />
-                    </Badge>
-                    <p className='text-gray-500 md:text-xl group-aria-[current=page]:text-blue'>Chats</p>
-
-                </div>
-            </NavLink >
-
-            <NavLink key={"People"} className="group aria-[current=page]:*:bg-base-200" to={'/people'}>
-                <div className='flex flex-col items-center gap-1 px-4 rounded-2xl bg-base-100/10'>
-                    <Badge className='ml-auto mr-2.5' color="primary" badgeContent={unreadRequestsToUserCount}>
-                        <MdPeopleAlt className='text-5xl text-gray group-aria-[current=page]:text-blue' />
-                    </Badge>
-                    <p className='text-gray-500 md:text-xl group-aria-[current=page]:text-blue'>People</p>
-                </div>
-            </NavLink>
-
-            <NavLink key={"Profile"} className="group aria-[current=page]:*:bg-base-200" to={'/profile'}>
-                <div className='flex flex-col items-center gap-1 px-4 rounded-2xl bg-base-100/10'>
-                    <BiSolidUser className='text-5xl text-gray group-aria-[current=page]:text-blue' />
-                    <p className='text-gray-500 md:text-xl group-aria-[current=page]:text-blue'>Profile</p>
-                </div>
-            </NavLink>
-        </div >
-    )
+        <div className='flex flex-row md:flex-col justify-around md:justify-start gap-4 h-full'>
+            <NavItem to="/" icon={RiChatSmile3Fill} label="Chats" badge={unreadChats} />
+            <NavItem to="/people" icon={MdPeopleAlt} label="People" badge={unreadRequests} />
+            <NavItem to="/profile" icon={BiSolidUser} label="Profile" />
+        </div>
+    );
 }
+
+const cn = (...classes) => classes.filter(Boolean).join(' ');

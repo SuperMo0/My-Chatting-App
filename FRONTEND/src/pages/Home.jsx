@@ -2,46 +2,54 @@ import React, { useEffect } from 'react'
 import { Outlet } from 'react-router'
 import Panel from '../components/Panel'
 import { useChatStore } from '../stores/chat.store';
-import { useAuthStore } from '../stores/auth.store';
 import { ClipLoader } from 'react-spinners';
 
 export default function Home() {
-
-    const { connectSocket,
+    const {
+        connectSocket,
         getChats,
         onlineUsers,
         getRequestsToUser,
         isGettingChats,
-        isGettingRequestsToUser,
+        isGettingRequestsToUser
     } = useChatStore();
 
     useEffect(() => {
-        if (!isGettingChats) getChats();
-        if (!isGettingRequestsToUser) getRequestsToUser();
-    }, [])
+        getChats();
+        getRequestsToUser();
+        const socket = connectSocket();
+        console.log('running');
 
-    useEffect(() => {
-        let socket = connectSocket()
-        return () => socket.disconnect();
-    }, [])
 
-    if (isGettingChats || !onlineUsers || isGettingRequestsToUser) return <div className='grid place-content-center h-full'>
-        <ClipLoader color='blue' loading={true} />
-    </div>
+        return () => {
+            socket?.disconnect(); console.log('disconnect');
+        };
+    }, []);
 
+    // console.log(onlineUsers, isGettingChats, isGettingRequestsToUser);
+
+    if (isGettingChats || !onlineUsers || isGettingRequestsToUser) {
+        return (
+            <div className='flex flex-col items-center justify-center h-screen bg-base-100 gap-4'>
+                <ClipLoader color='#3b82f6' size={50} />
+                <p className="text-sm font-medium animate-pulse">Initializing your workspace...</p>
+            </div>
+        );
+    }
 
     return (
-        <div className="flex items-center justify-center h-dvh bg-base-100 ">
-            <div className='max-w-full w-full bg-slate-300 glass dark:bg-base-300 h-full rounded-2xl px-2 py-3'>
-                <div className='flex flex-col md:flex h-full md:flex-row md:gap-3'>
-                    <div className='md:mt-0 order-2 md:order-1 bg-base-300 rounded-2xl mt-1 glass'>
-                        <Panel></Panel>
+        <div className="h-dvh bg-slate-50 dark:bg-slate-950 p-2 md:p-4 lg:p-6 transition-colors duration-500">
+            <div className='max-w-7xl mx-auto h-full glass-card rounded-3xl overflow-hidden'>
+                <div className='flex flex-col md:flex-row h-full'>
+                    <div className='order-2 md:order-1 bg-white/50 dark:bg-black/20 p-2 md:p-4'>
+                        <Panel />
                     </div>
-                    <div className='order-1 md:order2 flex-1 overflow-hidden'>
-                        <Outlet></Outlet>
-                    </div>
+
+                    <main className='order-1 md:order-2 flex-1 overflow-hidden relative'>
+                        <Outlet />
+                    </main>
                 </div>
             </div>
         </div>
-    )
+    );
 }
