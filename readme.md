@@ -25,6 +25,7 @@ full-stack chat application built for real-time communication. This project is p
 
 
 ---
+![Project Demo](./project-images/video.gif)
 ![ALT TEXT](./project-images/Image1.png)
 ![ALT TEXT](./project-images/Image2.png)
 ![ALT TEXT](./project-images/Image3.png)
