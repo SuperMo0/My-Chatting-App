@@ -10,5 +10,8 @@
     "postinstall": "npm install --prefix BACKEND && npm install --prefix FRONTEND",
     "build": "npm run build --prefix FRONTEND && npm run gen --prefix BACKEND",
     "start": "npm run migrate --prefix BACKEND && npm run start --prefix BACKEND"
+  },
+  "engines": {
+    "node": "24.12.0"
   }
 }
